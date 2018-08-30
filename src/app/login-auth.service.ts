@@ -20,5 +20,27 @@ export class LoginAuthService {
     return users;
   }
 
+  public getRepo(name:string)
+  {
+    let repos = this._http.get(this.baseUrl+name+'/repos');
+   // console.log(repos);
+    return repos;
+  }
+
+  public getGist(name:string)
+  {
+    let gists = this._http.get(this.baseUrl+name+'/gists');
+    // console.log(gists);
+    return gists;
+  }
+
+  public getFollowers(name:string)
+  {
+    let followers = this._http.get(this.baseUrl+name+'/followers');
+   // console.log(followers);
+    return followers;
+  }
+
+  
 
 }

@@ -60,3 +60,22 @@ body{
     cursor: pointer;
   }
 
+.repo {
+    width :100%;
+    height: 50px;
+    background-color: #f00;
+}
+.repo2{
+    color: white; 
+    text-align: center;
+    margin-top: 1%;
+}
+.repo3{
+
+    margin-top: 2%;
+}
+.cardrepo{
+    padding-top: 1%;
+    padding-bottom: 3%;
+   
+}

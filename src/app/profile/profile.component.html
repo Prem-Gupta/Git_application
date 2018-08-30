@@ -101,9 +101,59 @@
 
   <hr>
 
-  <div class="row container2" style="color:red;">
-    <div class="panel panel-default">
-      <div class="panel-heading">Repos</div>
+  <div class="row" *ngIf="repoName?.length>0">
+           <div class="repo" >
+               <a ><h5 class="repo2">Repositry</h5></a>  
+           </div>
+
+           <div class="row repo3">
+               <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let repo of repoName | paginate: { id:'repo', itemsPerPage: 8, currentPage: p };">
+                     <a href= {{repo.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{repo.name}}</h4> </a> 
+               </div>
+              
+           </div>
+           <div class="row repo3">
+              <pagination-controls id="repo" (pageChange)="p = $event"></pagination-controls>
+           </div>
+          
+  </div>
+
+  
+
+  <div class="row" *ngIf="gistName?.length > 0">
+      <hr>
+      <div class="repo" >
+          <a ><h5 class="repo2">Gists</h5></a>  
+      </div>
+
+      <div class="row repo3">
+          <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let gist of gistName | paginate: { id:'gist', itemsPerPage: 8, currentPage: q };">
+                <a href= {{gist.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{gist.description}}</h4> </a> 
+          </div>
+         
+      </div>
+      <div class="row repo3">
+         <pagination-controls id="gist" (pageChange)="q = $event"></pagination-controls>
+      </div>
+     
+</div>
+
+
+<div class="row" *ngIf="followrsName?.length > 0">
+    <hr>
+    <div class="repo" >
+        <a ><h5 class="repo2">FollowrsName</h5></a>  
     </div>
-  </div>
-  </div>
+
+    <div class="row repo3">
+        <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let followers of followrsName | paginate: { id:'followers', itemsPerPage: 8, currentPage: m };">
+              <a href= {{followers.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{followers.login}}</h4> </a> 
+        </div> 
+    </div>
+
+    <div class="row repo3">
+       <pagination-controls id="followers" (pageChange)="m = $event"></pagination-controls>
+    </div>
+   
+</div>
+
