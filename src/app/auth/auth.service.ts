@@ -12,6 +12,8 @@ import * as auth0 from 'auth0-js';
 })
 export class AuthService {
 
+  userProfile: any;
+
   auth0 = new auth0.WebAuth({
     clientID: auth.CLIENT_ID,
     domain: auth.CLIENT_DOMAIN,
@@ -21,7 +23,7 @@ export class AuthService {
     scope: auth.SCOPE
   });
 
-  userProfile: any;
+  
 
   constructor(public router: Router) { }
 
@@ -31,15 +33,18 @@ export class AuthService {
 
 
   public handleAuthentication(): void {
+
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
+       // console.log(authResult);
         this.setSession(authResult);
         this.router.navigate(['/profile']);
       } else if (err) {
         this.router.navigate(['/login']);
         console.log(err);
       }
+
     });
   }
 
@@ -58,6 +63,7 @@ export class AuthService {
 
   public getProfile(cb): void {
     const accessToken = localStorage.getItem('access_token');
+
     if (!accessToken) {
       throw new Error('Access Token must exist to fetch profile');
     }
@@ -66,6 +72,7 @@ export class AuthService {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         self.userProfile = profile;
+      //  console.log(self.userProfile);
       
       }
       cb(err, profile);

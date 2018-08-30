@@ -12,5 +12,5 @@ export const auth : gitAuthVariable = {
     CLIENT_DOMAIN: 'priyam.auth0.com',
     AUDIENCE: 'https://priyam.auth0.com/userinfo',
     REDIRECT: 'http://localhost:4201/profile',
-    SCOPE: 'openid'
+    SCOPE: 'openid profile'
 }
