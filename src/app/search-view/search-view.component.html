@@ -1,3 +1,214 @@
-<p>
-  search-view works!
-</p>
+<div class="container">
+
+  <div class="row container2">
+    <div class="col-md-10">
+      <form #searchForm="ngForm" autocomplete="off">
+        <div>
+          <input type="text" name="Username" (input)="userSuggestion()" [(ngModel)]="Username" #title="ngModel" class="form-control"
+            placeholder="Search User...">
+        </div>
+
+        <div>
+          <ul class="myUL" *ngFor="let items of suggestionArray">
+            <li (click)="selectValue(items)">
+              <a>{{items}}</a>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary" (click)="userSearch()">Search</button>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="container-fluid container1" *ngIf="userDetails">
+          <img class=" img-thumbnail" width="350px" src=   {{userDetails.avatar_url}} alt="Card image">
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 container2">
+        <div class="card card-1 text-md-center " *ngIf="userDetails">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>
+                  <span class="bold">Name</span>
+                </td>
+                <td>
+                  <p>{{userDetails.name}}</p>
+                </td>
+              </tr>
+              <tr *ngIf="userDetails.company">
+                <td>
+                  <span class="bold">Company</span>
+                </td>
+                <td colspan="2">{{userDetails.company}}</td>
+              </tr>
+  
+              <tr *ngIf="userDetails.bio">
+                <td>
+                  <span class="bold">Bio</span>
+                </td>
+                <td colspan="2"> {{userDetails.bio}}</td>
+              </tr>
+  
+              <tr>
+                <td>
+                  <span class="bold">Public Repos</span>
+                </td>
+                <td colspan="2"> {{userDetails.public_repos}}</td>
+              </tr>
+  
+              <tr>
+                <td>
+                  <span class="bold">Public Gists</span>
+                </td>
+                <td colspan="2"> {{userDetails.public_gists}}</td>
+              </tr>
+  
+              <tr *ngIf="userDetails.blog">
+                <td>
+                  <span class="bold">Blog</span>
+                </td>
+                <td colspan="2"> {{userDetails.blog}}</td>
+              </tr>
+  
+              <tr>
+                <td>
+                  <span class="bold">Followers</span>
+                </td>
+                <td colspan="2"> {{userDetails.followers}}</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="bold">Following</span>
+                </td>
+                <td colspan="2"> {{userDetails. following}}</td>
+              </tr>
+  
+  
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+  
+   <hr>
+  
+     <div class="row" *ngIf="repoName?.length>0">
+             <div class="repo" >
+                 <a ><h5 class="repo2">Repositry</h5></a>  
+             </div>
+  
+             <div class="row repo3">
+                 <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let repo of repoName | paginate: { id:'repo', itemsPerPage: 8, currentPage: p };">
+                       <a href= {{repo.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{repo.name}}</h4> </a> 
+                       <p>{{repo.description}}</p>
+                       <div class="row">
+                          <div class="col-lg-6">
+                                <p>Forks : {{repo.forks}}</p>
+                                <p>Created On : {{repo.created_at | date}}</p>
+                                <p>Last Updated : {{repo.updated_at | date}}</p>
+                          </div>
+                          <div class="col-lg-6">
+                             <p>Watchers : {{repo.watchers}}</p>
+                           </div>
+                    </div>
+                 </div>
+                
+             </div>
+             <div class="row repo3">
+                <pagination-controls id="repo" (pageChange)="p = $event"></pagination-controls>
+             </div>
+            
+    </div>
+  
+   
+  
+    <div class="row" *ngIf="gistName?.length > 0">
+        <hr>
+        <div class="repo" >
+            <a ><h5 class="repo2">Gists</h5></a>  
+        </div>
+  
+        <div class="row repo3">
+            <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let gist of gistName | paginate: { id:'gist', itemsPerPage: 8, currentPage: q };">
+                  <a href= {{gist.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{gist.description}}</h4> </a>
+                  <p>{{gist.description}}</p>
+                  <div class="row">
+                     <div class="col-lg-6">
+                        
+                           <p>Created On : {{gist.created_at | date}}</p>
+                           <p>Last Updated : {{gist.updated_at | date}}</p>
+                     </div>
+                     <div class="col-lg-6">
+                        <p>Comments : {{gist.comments}}</p>
+                      </div>
+               </div> 
+            </div>
+           
+        </div>
+        <div class="row repo3">
+           <pagination-controls id="gist" (pageChange)="q = $event"></pagination-controls>
+        </div>
+       
+  </div>
+  
+   
+  <div class="row" *ngIf="followrsName?.length > 0">
+      <hr>
+      <div class="repo" >
+          <a ><h5 class="repo2">Followrs Name</h5></a>  
+      </div>
+  
+      <div class="row repo3">
+          <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let followers of followrsName | paginate: { id:'followers', itemsPerPage: 8, currentPage: m };">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href= {{followers.html_url}} style="text-decoration:none;" target="_blank" ><h4>Name : {{followers.login}}</h4> </a> 
+                 </div>
+                 <div class="col-sm-6">
+                    <img class=" img-thumbnail img1" src= {{followers.avatar_url}} alt="Card image">
+                 </div>
+            </div>
+                
+               
+          </div> 
+      </div>
+  
+      <div class="row repo3">
+         <pagination-controls id="followers" (pageChange)="m = $event"></pagination-controls>
+      </div> 
+
+
+
+       
+  <div class="row" *ngIf="followringName?.length > 0">
+      <div class="repo" >
+          <a ><h5 class="repo2">Following Name</h5></a>  
+      </div>
+  
+      <div class="row repo3">
+          <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let follows of followringName | paginate: { id:'follows', itemsPerPage: 8, currentPage: n };">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href= {{follows.html_url}} style="text-decoration:none;" target="_blank" ><h4>Name : {{follows.login}}</h4> </a> 
+                 </div>
+                 <div class="col-sm-6">
+                    <img class=" img-thumbnail img1" src= {{follows.avatar_url}} alt="Card image">
+                 </div>
+            </div>
+                
+               
+          </div> 
+      </div>
+  
+      <div class="row repo3">
+         <pagination-controls id="follows" (pageChange)="n = $event"></pagination-controls>
+      </div> 
+     
+</div>

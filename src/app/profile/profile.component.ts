@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   public followrsName:any;
   user:any;
   suggestionArray: string[] = [];
-  results:any=[];
+
   p: number = 1;
   q:number =1;
   m:number=1;
@@ -42,11 +42,15 @@ export class ProfileComponent implements OnInit {
         data => {
           this.userName = data;
         
-         
+      //   console.log(this.userName);
+
+
+
          // Get all repos of user
          this.loginService.getRepo(this.userName.login).subscribe(
           data => {
             this.repoName = data;
+           console.log(this.repoName);
           },
           error => {
            console.log(error);
@@ -93,50 +97,6 @@ export class ProfileComponent implements OnInit {
    
   }
 
-
-  public userSearch() : any {
-    this.user = this.Username;
-   // this.suggestionArray = [];
-   this.loginService.getUser(this.user).subscribe(
-    data => {
-    
-       console.log(data);
-    },
-    error => {
-     console.log(error);
-    }
-   )
-  }
-
-  userSuggestion():any {
-    if (this.Username.length >= 3) {
-      this.loginService.searchUser(this.Username).subscribe(
-        data => {
-          this.suggestionArray.length = 0;
-          this.results = data;
-       //   console.log(this.results.items);
-           if(this.results.items){
-            this.results.items.map(item => {
-              this.suggestionArray.push(item.login);
-            })
-          }
-          // console.log(this.suggestionArray,123)
-        },
-        error => {
-          console.log(error);
-        }
-      )
-    }
-    else this.suggestionArray.length = 0;
-  }
-
-  selectValue(value) {
-
-    this.Username = value;
- // console.log(this.Username);
-    this.suggestionArray = [];
-
-  }
 
 
 

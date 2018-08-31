@@ -41,6 +41,13 @@ export class LoginAuthService {
     return followers;
   }
 
+  public getFollowing(name:string)
+  {
+    let followering = this._http.get(this.baseUrl+name+'/following');
+    // console.log(followering);
+    return followering;
+  }
+
   
 
 }

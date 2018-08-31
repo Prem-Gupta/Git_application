@@ -1,30 +1,4 @@
 <div class="container">
-
-  <div class="row container2">
-    <div class="col-md-10">
-      <form #searchForm="ngForm" autocomplete="off">
-        <div>
-          <input type="text" name="Username" (input)="userSuggestion()" [(ngModel)]="Username" #title="ngModel" class="form-control"
-            placeholder="Search User...">
-        </div>
-
-        <div>
-          <ul class="myUL" *ngFor="let items of suggestionArray">
-            <li (click)="selectValue(items)">
-              <a>{{items}}</a>
-            </li>
-          </ul>
-        </div>
-
-      </form>
-    </div>
-
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary" (click)="userSearch()">Search</button>
-    </div>
-  </div>
-
-  <hr>
   <div class="row">
     <div class="col-lg-6 col-md-12">
       <div class="container-fluid container1" *ngIf="userName">
@@ -63,8 +37,17 @@
               </td>
               <td colspan="2"> {{userName.public_repos}}</td>
             </tr>
+            
 
             <tr>
+                <td>
+                  <span class="bold">Repos Url</span>
+                </td>
+                <td colspan="2"><a href = {{userName.repos_url}} target="_blank"> {{userName.repos_url}}</a> </td>
+              </tr>
+            <tr>
+
+
               <td>
                 <span class="bold">Public Gists</span>
               </td>
@@ -107,8 +90,21 @@
            </div>
 
            <div class="row repo3">
-               <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let repo of repoName | paginate: { id:'repo', itemsPerPage: 8, currentPage: p };">
+               <div class="card card-1 col-lg-5 cardrepo" *ngFor="let repo of repoName | paginate: { id:'repo', itemsPerPage: 8, currentPage: p };">
                      <a href= {{repo.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{repo.name}}</h4> </a> 
+                     <p>{{repo.description}}</p>
+                     <div class="row">
+                           <div class="col-lg-6">
+                                 <p>Forks : {{repo.forks}}</p>
+                                 <p>Created On : {{repo.created_at | date}}</p>
+                                 <p>Last Updated : {{repo.updated_at | date}}</p>
+                           </div>
+                           <div class="col-lg-6">
+                              <p>Watchers : {{repo.watchers}}</p>
+                            </div>
+                     </div>
+
+                    
                </div>
               
            </div>
