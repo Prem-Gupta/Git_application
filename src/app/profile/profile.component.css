@@ -67,3 +67,21 @@ body{
     padding-bottom: 3%;
    
 }
+
+.myUL {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .myUL li a {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    background-color: #f6f6f6;
+    padding: 6px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    cursor: pointer;
+  }

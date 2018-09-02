@@ -1,4 +1,28 @@
 <div class="container">
+
+    <div class="row container2">
+        <div class="col-md-10">
+          <form #searchForm="ngForm" autocomplete="off">
+            <div>
+              <input type="text" name="Username" (input)="userSuggestion()" [(ngModel)]="Username" #title="ngModel" class="form-control"
+                placeholder="Search User...">
+            </div>
+    
+            <div>
+              <ul class="myUL" *ngFor="let items of suggestionArray">
+                <li (click)="selectValue(items)">
+                  <a>{{items}}</a>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+    
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" (click)="userSearch()">Search</button>
+        </div>
+      </div>
+
   <div class="row">
     <div class="col-lg-6 col-md-12">
       <div class="container-fluid container1" *ngIf="userName">
@@ -150,6 +174,30 @@
     <div class="row repo3">
        <pagination-controls id="followers" (pageChange)="m = $event"></pagination-controls>
     </div>
+
+
+
+
+    <div class="row repo3">
+      <div class="card card-1 col-lg-5 offset-lg-1 cardrepo" *ngFor="let follows of followringName | paginate: { id:'follows', itemsPerPage: 8, currentPage: n };">
+        <div class="row">
+            <div class="col-sm-6">
+                <a href= {{follows.html_url}} style="text-decoration:none;" target="_blank" ><h4>Name : {{follows.login}}</h4> </a> 
+             </div>
+             <div class="col-sm-6">
+                <img class=" img-thumbnail img1" src= {{follows.avatar_url}} alt="Card image">
+             </div>
+        </div>
+            
+           
+      </div> 
+  </div>
+
+  <div class="row repo3">
+     <pagination-controls id="follows" (pageChange)="n = $event"></pagination-controls>
+  </div> 
    
 </div>
+
+<router-outlet></router-outlet>
 

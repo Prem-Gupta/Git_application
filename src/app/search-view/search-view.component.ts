@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnChanges, Input  } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { LoginAuthService } from '../login-auth.service';
+import { Router,ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-view',
@@ -8,6 +9,7 @@ import { LoginAuthService } from '../login-auth.service';
   styleUrls: ['./search-view.component.css']
 })
 export class SearchViewComponent implements OnInit {
+  @Input() name: any = [];
   Username: string;
   profile: any;
   subName:string;
@@ -24,19 +26,20 @@ export class SearchViewComponent implements OnInit {
   q:number =1;
   m:number=1;
   n:number=1;
-  constructor(public auth: AuthService, public loginService :LoginAuthService) { }
+  constructor(public auth: AuthService, public loginService :LoginAuthService,
+    public router :Router,private _route: ActivatedRoute) { 
+      this.ngOnInit();
+    }
 
-  ngOnInit() {}
 
-
-  public userSearch() : any {
-    this.user = this.Username;
-   // this.suggestionArray = [];
-   this.loginService.getUser(this.user).subscribe(
+  ngOnInit() {
+    let myUserName = this._route.snapshot.paramMap.get('user');
+    console.log(myUserName);
+    this.loginService.getUser(myUserName).subscribe(
     data => {
         this.userDetails = data;
-       // console.log( this.userDetails);
 
+        
          // Get all repos of user
          this.loginService.getRepo(this.userDetails.login).subscribe(
           data => {
@@ -48,36 +51,35 @@ export class SearchViewComponent implements OnInit {
 
 
 
-           // Get all gists of user
+      // Get all gists of user
 
       this.loginService.getGist(this.userDetails.login).subscribe(
         data => {
           this.gistName = data;
-          console.log(this.gistName);
         },
         error => {
          console.log(error);
         });
 
 
-          // Get all followers of user
+      // Get all followers of user
 
       this.loginService.getFollowers(this.userDetails.login).subscribe(
         data => {
           this.followrsName = data;
-          // console.log(this.followrsName);
         },
         error => {
          console.log(error);
         });
 
 
-          // Get all following user
+
+
+      // Get all following user
 
       this.loginService.getFollowing(this.userDetails.login).subscribe(
         data => {
           this.followringName = data;
-           console.log(this.followringName);
         },
         error => {
          console.log(error);
@@ -89,7 +91,18 @@ export class SearchViewComponent implements OnInit {
      console.log(error);
     }
    )
+
+  
+   
   }
+
+  public userSearch() : any {
+    
+     this.user = this.Username;
+     this.router.navigate(['/searchUser',this.user]);
+     
+  }
+
 
   userSuggestion():any {
     if (this.Username.length >= 3) {
@@ -97,13 +110,11 @@ export class SearchViewComponent implements OnInit {
         data => {
           this.suggestionArray.length = 0;
           this.results = data;
-       //   console.log(this.results.items);
            if(this.results.items){
             this.results.items.map(item => {
               this.suggestionArray.push(item.login);
             })
           }
-          // console.log(this.suggestionArray,123)
         },
         error => {
           console.log(error);
@@ -113,10 +124,11 @@ export class SearchViewComponent implements OnInit {
     else this.suggestionArray.length = 0;
   }
 
+
+
   selectValue(value) {
 
     this.Username = value;
- // console.log(this.Username);
     this.suggestionArray = [];
 
   }

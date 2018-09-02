@@ -34,10 +34,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
       { path: 'login', component:LoginComponent },
       { path: 'profile', component:ProfileComponent,canActivate:[AuthGuard] },
       { path: '',  redirectTo: '/login', pathMatch: 'full' },
-      { path: 'searchUser', component: SearchViewComponent },
+      { path: 'searchUser/:user', component: SearchViewComponent },
       { path: '**', component: NotFoundComponent }
-
-
     ])
   ],
   providers: [AuthService, LoginAuthService ],

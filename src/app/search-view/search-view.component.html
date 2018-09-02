@@ -140,8 +140,7 @@
                   <a href= {{gist.html_url}} style="text-decoration:none;" target="_blank" ><h4>{{gist.description}}</h4> </a>
                   <p>{{gist.description}}</p>
                   <div class="row">
-                     <div class="col-lg-6">
-                        
+                     <div class="col-lg-6">   
                            <p>Created On : {{gist.created_at | date}}</p>
                            <p>Last Updated : {{gist.updated_at | date}}</p>
                      </div>
@@ -212,3 +211,4 @@
       </div> 
      
 </div>
+<router-outlet></router-outlet>
