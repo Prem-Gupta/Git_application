@@ -1,5 +1,5 @@
 .image{
     height:40em; background-size:cover; width:auto;
-    background-image:url('/assets/404notfound.jpg');
+    background-image:url('src/404notfound.jpg');
     background-position:50% 50%;
   }
