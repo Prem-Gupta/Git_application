@@ -13,7 +13,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SearchViewComponent } from './search-view/search-view.component';
-import { SearchBoxComponent } from './search-box/search-box.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     NotFoundComponent,
     ProfileComponent,
     SearchViewComponent,
-    SearchBoxComponent
+   
   ],
   imports: [
     BrowserModule,

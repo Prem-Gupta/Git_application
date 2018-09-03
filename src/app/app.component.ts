@@ -11,11 +11,6 @@ export class AppComponent {
     auth.handleAuthentication();
   }
 
-  public btnsearch()
-  {
-    this.router.navigateByUrl('/searchUser');
-  }
-
   public myprofile()
   {
     this.router.navigateByUrl('/profile');

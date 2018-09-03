@@ -1,4 +1,4 @@
-import { Component, OnInit,OnChanges, Input  } from '@angular/core';
+import { Component, OnInit,OnChanges, OnDestroy, Input  } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { LoginAuthService } from '../login-auth.service';
 import { Router,ActivatedRoute } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router,ActivatedRoute } from '@angular/router';
   templateUrl: './search-view.component.html',
   styleUrls: ['./search-view.component.css']
 })
-export class SearchViewComponent implements OnInit {
+export class SearchViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input() name: any = [];
   Username: string;
   profile: any;
@@ -28,14 +28,24 @@ export class SearchViewComponent implements OnInit {
   n:number=1;
   constructor(public auth: AuthService, public loginService :LoginAuthService,
     public router :Router,private _route: ActivatedRoute) { 
-      this.ngOnInit();
+    }
+    ngOnChanges()
+    {
+      console.log("gfhjj");
+      this.getallDetails();
     }
 
+  ngOnInit() { 
+    this.getallDetails();
+  }
 
-  ngOnInit() {
-    let myUserName = this._route.snapshot.paramMap.get('user');
-    console.log(myUserName);
-    this.loginService.getUser(myUserName).subscribe(
+  ngOnDestroy() {
+  }
+ 
+  getallDetails(){
+    let user = this._route.snapshot.paramMap.get('user');
+   // console.log(user);
+    this.loginService.getUser(user).subscribe(
     data => {
         this.userDetails = data;
 
@@ -99,7 +109,9 @@ export class SearchViewComponent implements OnInit {
   public userSearch() : any {
     
      this.user = this.Username;
+     console.log(this.user);
      this.router.navigate(['/searchUser',this.user]);
+    // this.getallDetails();
      
   }
 
