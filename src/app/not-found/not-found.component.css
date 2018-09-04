@@ -3,7 +3,7 @@
     height:40em;
     background-size:cover; 
     width: 100%;;
-    background-image:url('/404notfound.jpg');
+    background-image:url('/src/assets/404notfound.jpg');
     background-repeat: no-repeat;
     background-position: center;
     margin: 0;
