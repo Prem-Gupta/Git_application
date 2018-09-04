@@ -1,14 +1,14 @@
-import { Component, OnInit,OnChanges, OnDestroy, Input  } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { LoginAuthService } from '../login-auth.service';
 import { Router,ActivatedRoute } from '@angular/router';
-
+import { NgProgress } from 'ngx-progressbar';
 @Component({
   selector: 'app-search-view',
   templateUrl: './search-view.component.html',
   styleUrls: ['./search-view.component.css']
 })
-export class SearchViewComponent implements OnInit, OnChanges, OnDestroy {
+export class SearchViewComponent implements OnInit {
   @Input() name: any = [];
   Username: string;
   profile: any;
@@ -27,28 +27,32 @@ export class SearchViewComponent implements OnInit, OnChanges, OnDestroy {
   m:number=1;
   n:number=1;
   constructor(public auth: AuthService, public loginService :LoginAuthService,
-    public router :Router,private _route: ActivatedRoute) { 
+    public router :Router,private _route: ActivatedRoute,public ngProgress: NgProgress) { 
+      
+      this._route.url.subscribe(url =>{
+        this.ngProgress.start();
+        this.getallDetails();
+   });
     }
-    ngOnChanges()
-    {
-      console.log("gfhjj");
-      this.getallDetails();
-    }
+   
 
   ngOnInit() { 
+    this.ngProgress.start();
     this.getallDetails();
+   
   }
 
-  ngOnDestroy() {
-  }
+ 
  
   getallDetails(){
     let user = this._route.snapshot.paramMap.get('user');
    // console.log(user);
     this.loginService.getUser(user).subscribe(
     data => {
+      this.ngProgress.done();
+    //  console.log(data);
         this.userDetails = data;
-
+        
         
          // Get all repos of user
          this.loginService.getRepo(this.userDetails.login).subscribe(
@@ -109,7 +113,7 @@ export class SearchViewComponent implements OnInit, OnChanges, OnDestroy {
   public userSearch() : any {
     
      this.user = this.Username;
-     console.log(this.user);
+   //  console.log(this.user);
      this.router.navigate(['/searchUser',this.user]);
     // this.getallDetails();
      

@@ -4,6 +4,7 @@ import { LoginAuthService } from '../login-auth.service';
 import { getLocaleExtraDayPeriods } from '@angular/common';
 import { error } from '@angular/compiler/src/util';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-profile',
@@ -29,15 +30,18 @@ export class ProfileComponent implements OnInit {
   q: number = 1;
   m: number = 1;
   n: number =1;
-  constructor(public auth: AuthService, public loginService: LoginAuthService,public router :Router) { }
+  constructor(public auth: AuthService, public loginService: LoginAuthService,
+    public router :Router,private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     if (this.auth.userProfile) {
 
       this.profile = this.auth.userProfile;
       this.subName = this.profile.nickname;
       this.loginService.getUser(this.subName).subscribe(
         data => {
+          this.spinnerService.hide();
           this.userName = data;
           this.getDetails();
         },
@@ -46,12 +50,13 @@ export class ProfileComponent implements OnInit {
         })
 
     } else {
-
+      this.spinnerService.show();
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
         this.subName = this.profile.nickname;
         this.loginService.getUser(this.subName).subscribe(
           data => {
+            this.spinnerService.hide();
             this.userName = data;
             this.getDetails();
 

@@ -21,7 +21,7 @@ body{
  }
  
  hr {
-      color: #f00;
+      color: #007bff;
       background: #e0e0e0; 
       width: 100%; 
       height: 10%;
@@ -51,7 +51,7 @@ body{
 .repo {
     width :100%;
     height: 50px;
-    background-color: #f00;
+    background-color:#007bff;
 }
 .repo2{
     color: white; 

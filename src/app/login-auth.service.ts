@@ -11,12 +11,13 @@ export class LoginAuthService {
   public getUser(name:string)
   {
     let user = this._http.get(this.baseUrl+name)
+   // console.log(user);
     return user;
   }
 
   public searchUser(name:string)
   {
-    let users = this._http.get(this.userUrl+name)
+    let users = this._http.get(this.userUrl+name+'&per_page=10')
     return users;
   }
 
